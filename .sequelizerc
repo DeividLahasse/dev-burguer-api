@@ -1,0 +1,9 @@
+const { resolve } = require('node:path');
+module.exports = {
+  config: resolve(__dirname, 'src', 'config', 'database.cjs'),
+  // 1. O caminho das migrações deve apontar para onde estão os arquivos 'up' e 'down'
+  'migrations-path': resolve(__dirname, 'src', 'database', 'migrations'),
+
+  // 2. O caminho dos modelos deve apontar para onde estão as classes dos seus models
+  'models-path': resolve(__dirname, 'src', 'app', 'models'),
+};
