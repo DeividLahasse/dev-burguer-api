@@ -52,9 +52,10 @@ routes.put(
   CategoryController.update,
 );
 
-routes.post('/Orders', adminMiddlewar, OrderController.store);
+// routes.post('/orders', adminMiddlewar, OrderController.store);
+routes.post('/orders', OrderController.store);
 
-routes.get('/Orders', adminMiddlewar, OrderController.index);
+routes.get('/orders', adminMiddlewar, OrderController.index);
 
 routes.put('/orders/:id', adminMiddlewar, OrderController.update);
 

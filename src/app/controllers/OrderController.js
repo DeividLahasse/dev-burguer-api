@@ -5,6 +5,7 @@ import Order from '../schemas/Order.js';
 
 class OrderController {
   async store(request, response) {
+    
     const schema = Yup.object({
       products: Yup.array()
         .required()
