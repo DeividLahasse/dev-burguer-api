@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 3001
 
-CMD npx sequelize-cli db:migrate && pnpm ru start
+CMD npx sequelize-cli db:migrate && npm ru start
