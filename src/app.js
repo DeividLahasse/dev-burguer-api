@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import fileRoutesConfig from './config/fileRoutes.cjs';
 import routes from './routes.js';
+import 'dotenv/config';
 
 const app = express();
 app.use(cors());
@@ -12,6 +13,5 @@ app.use('/product-file', fileRoutesConfig);
 app.use('/category-file', fileRoutesConfig);
 
 app.use(routes);
-
 
 export default app;

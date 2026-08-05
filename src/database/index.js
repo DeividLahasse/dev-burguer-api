@@ -24,7 +24,7 @@ class Database {
 
   mongo() {
     this.mongooseConncetion = mongoose.connect(
-      'mongodb://localhost:27017/devburguer',
+      process.env.MONGO_URL
     );
   }
 }
