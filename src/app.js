@@ -14,4 +14,10 @@ app.use('/category-file', fileRoutesConfig);
 
 app.use(routes);
 
+// Handler de erro global — captura qualquer erro não tratado (inclusive do multer/cloudinary)
+app.use((err, request, response, next) => {
+  console.error('Erro não tratado:', err);
+  response.status(500).json({ error: err.message || 'Erro interno no servidor' });
+});
+
 export default app;
