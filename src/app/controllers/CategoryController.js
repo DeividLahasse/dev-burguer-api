@@ -12,25 +12,33 @@ class CategoryController {
       return response.status(400).json({ error: err.errors });
     }
 
-    const { name } = request.body;
-    const { filename } = request.file;
+    try {
+      const { name } = request.body;
 
-    const existngCategory = await Category.findOne({
-      where: {
+      if (!request.file) {
+        return response.status(400).json({ error: 'Arquivo de imagem não enviado' });
+      }
+
+      const path = request.file.path;
+
+      const existngCategory = await Category.findOne({
+        where: { name },
+      });
+
+      if (existngCategory) {
+        return response.status(400).json({ error: 'Category already exists' });
+      }
+
+      const newCategory = await Category.create({
         name,
-      },
-    });
+        path,
+      });
 
-    if (existngCategory) {
-      return response.status(400).json({ eror: 'Category already existe' });
+      return response.status(201).json({ newCategory });
+    } catch (err) {
+      console.error('Erro ao criar categoria:', err);
+      return response.status(500).json({ error: err.message || 'Erro interno ao criar categoria' });
     }
-
-    const newCategory = await Category.create({
-      name,
-      path: filename,
-    });
-
-    return response.status(201).json({ newCategory });
   }
 
   async update(request, response) {
@@ -48,8 +56,7 @@ class CategoryController {
 
     let path;
     if (request.file) {
-      const { filename } = request.file;
-      path = filename;
+      path = request.file.path;
     }
 
     const existngCategory = await Category.findOne({
@@ -59,7 +66,7 @@ class CategoryController {
     });
 
     if (existngCategory) {
-      return response.status(400).json({ eror: 'Category already existe' });
+      return response.status(400).json({ error: 'Category already exists' });
     }
 
     await Category.update(
@@ -79,8 +86,6 @@ class CategoryController {
 
   async index(_request, response) {
     const categories = await Category.findAll();
-
-    console.log(_request.userId);
 
     return response.status(200).json(categories);
   }
