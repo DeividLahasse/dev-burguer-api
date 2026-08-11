@@ -7,11 +7,11 @@ class Category extends Model {
         name: Sequelize.STRING,
         path: Sequelize.STRING,
         url: {
-                  type: Sequelize.VIRTUAL,
-                  get() {
-                    return `${process.env.APP_URL}/category-file/${this.path}`;
-                  },
-                },
+          type: Sequelize.VIRTUAL,
+          get() {
+            return this.path;
+          },
+        },
       },
       {
         sequelize,
