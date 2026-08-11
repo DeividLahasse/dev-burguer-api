@@ -30,7 +30,7 @@
 // }
 
 // export default new Database();
-import mongoose from 'mongoose';
+ import mongoose from 'mongoose';
 import { Sequelize } from 'sequelize';
 import Category from '../app/models/Category.js';
 import Product from '../app/models/Product.js';
@@ -46,11 +46,9 @@ class Database {
   }
 
   init() {
-    // Pega o ambiente atual (development por padrão)
     const env = process.env.NODE_ENV || 'development';
     const config = databaseConfig[env];
 
-    // Instancia o Sequelize passando as credenciais desestruturadas e garantindo o dialect
     this.connection = new Sequelize(
       config.database,
       config.username,
@@ -59,9 +57,10 @@ class Database {
         host: config.host,
         port: config.port,
         dialect: 'postgres',
+        dialectOptions: config.dialectOptions,
         logging: false,
         define: config.define,
-      },
+      }
     );
 
     models
@@ -72,7 +71,9 @@ class Database {
   }
 
   mongo() {
-    this.mongooseConncetion = mongoose.connect(process.env.MONGO_URL);
+    this.mongooseConncetion = mongoose.connect(
+      process.env.MONGO_URL
+    );
   }
 }
 
